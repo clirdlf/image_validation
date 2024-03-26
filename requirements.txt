@@ -1,4 +1,6 @@
 ExifRead
+numpy
+opencv-python
 pandas
 pillow
 ydata-profiling
