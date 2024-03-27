@@ -1,4 +1,4 @@
-# IJA Automations
+# Image Validation Automations
 
 This workflow is a work in progress, but steps include:
 
