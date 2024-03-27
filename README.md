@@ -28,23 +28,23 @@ This repository has a script, `process_blur.py` that runs on a single image, or 
 # run on a single image
 
 # run on a directory of images
-python process.py -i input_directory/ 
+python process_blur.py -i input_directory/ 
 ```
 
 Reporting can be in CSV or JSON and saved.
 
 ```bash
 # Output CSV
-python process.py -i input_directory/ -o csv
+python process_blur.py -i input_directory/ -o csv
 
 # Output JSON
-python process.py -i input_directory/ -o json
+python process_blur.py -i input_directory/ -o json
 
 # Save CSV
-python process.py -i input_directory/ -o csv -s report.csv
+python process_blur.py -i input_directory/ -o csv -s report.csv
 
 # Save JSON
-python process.py -i input_directory/ -o json -s report.json
+python process_blur.py -i input_directory/ -o json -s report.json
 ```
 
 The output has information about how blurry an image is; the higher the value, the less blurry the image. 
@@ -70,7 +70,7 @@ The output has information about how blurry an image is; the higher the value, t
             "input_path": "images/IMG_0002.JPG",
             "score": 470.91608880174437,
             "blurry": false
-        }
+        },
     ]
 }
 ```

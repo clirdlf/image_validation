@@ -9,6 +9,9 @@ import argparse
 import logging
 import pathlib
 import json
+import time
+
+from multiprocessing import Pool
 
 import cv2
 from numpy import fix
@@ -38,6 +41,16 @@ def find_images(image_paths, img_extensions=['png','jpg','jpeg','tif','tiff']):
             for img_ext in img_extensions:
                 yield from path.rglob(f'*{img_ext}')
 
+def convert_to_preferred_format(sec):
+   sec = sec % (24 * 3600)
+   hour = sec // 3600
+   sec %= 3600
+   min = sec // 60
+   sec %= 60
+   print("seconds value in hours:",hour)
+   print("seconds value in minutes:",min)
+   return "%02d:%02d:%02d" % (hour, min, sec) 
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Generate blur detection on a directory of images.')
     parser.add_argument('-i', '--images', type=str, nargs='+', default='images', help='Directory of images to blur detect.')
@@ -61,6 +74,7 @@ if __name__ == '__main__':
     fix_size = not args.variable_size
 
     results = []
+    start_time = time.time()
 
     for image_path in find_images(args.images):
         image = cv2.imread(str(image_path))
@@ -119,3 +133,11 @@ if __name__ == '__main__':
             print(json.dumps(data, indent=4))
     else:
         raise ValueError('Invalid output format.')
+    
+    end_time = time.time()
+
+
+    timer = convert_to_preferred_format(end_time - start_time)
+    
+    # timer = calculate_execution_time(start_time, end_time)
+    print(f"Time in execution: {timer}")
