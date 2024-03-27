@@ -2,7 +2,7 @@
 
 This workflow is a work in progress, but steps include:
 
-* Sync files from NER Dropbox to CLIR Box and/or S3
+* Sync files from Dropbox to Box and/or S3
 * Read image files from Box/S3 directory
 * Validate EXIF metadata
 * Detect blurry images
@@ -12,7 +12,9 @@ This workflow is a work in progress, but steps include:
 
 This is based on BlurDection2.
 
-Blur detection works by using the total variance of the laplacian of an image to provide a quick and accurate method for scoring how blurry an image is. This is done by taking the difference between the mean pixel value in the original image and the mean pixel value in the blurred image, then squaring it and summing up all the values. The higher the variance of the laplacian, the more blurry the image.
+Blur detection works by using the total variance of the [Laplacian](https://docs.opencv.org/4.9.0/d5/db5/tutorial_laplace_operator.html) of an image to provide a quick and accurate method for scoring how blurry an image is. This is done by taking the difference between the mean pixel value in the original image and the mean pixel value in the blurred image, then squaring it and summing up all the values.
+
+**The lower the score, the blurrier the image**
 
 This algorithm depends on opencv and numpy.
 
@@ -22,55 +24,14 @@ This algorithm depends on opencv and numpy.
     
 ### Running Locally
 
-This repository has a script, `process_blur.py` that runs on a single image, or directory of images. The blur detection is highly dependent on the size of the image being processed. To get consistent scores we'll need to fix the image size to HD. To disable this, use the `--variable-size` flag.
+You can run the blur detection manually with. This will create a CSV report in the currently directory (`results.csv`) and is tuned specifically to run fast using [parallel processing](https://docs.python.org/3/library/multiprocessing.html).
 
-```bash
-# run on a single image
+    python process.py -i path/to/image_dir 
+    
+If  you need to run something that allows you to have more control (but is slower), you can run 
 
-# run on a directory of images
-python process_blur.py -i input_directory/ 
-```
+    python process_blur.py -i path/to/image_dir
 
-Reporting can be in CSV or JSON and saved.
+For a full list of options, see `process.py --help` and `process_blur.py --help`.
 
-```bash
-# Output CSV
-python process_blur.py -i input_directory/ -o csv
-
-# Output JSON
-python process_blur.py -i input_directory/ -o json
-
-# Save CSV
-python process_blur.py -i input_directory/ -o csv -s report.csv
-
-# Save JSON
-python process_blur.py -i input_directory/ -o json -s report.json
-```
-
-The output has information about how blurry an image is; the higher the value, the less blurry the image. 
-
-```json
-{
-    "images": [
-        "images"
-    ],
-    "threshold": 100.0,
-    "blurry_counts": {
-        "true": 23,
-        "false": 3
-    },
-    "fix_size": true,
-    "results": [
-        {
-            "input_path": "images/IMG_0014.JPG",
-            "score": 63.529971074944825,
-            "blurry": true
-        },
-        {
-            "input_path": "images/IMG_0002.JPG",
-            "score": 470.91608880174437,
-            "blurry": false
-        },
-    ]
-}
-```
+This is based upon the blogpost [Blur Detection With Opencv](https://www.pyimagesearch.com/2015/09/07/blur-detection-with-opencv/) by Adrian Rosebrock.
