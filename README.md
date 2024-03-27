@@ -35,3 +35,21 @@ If  you need to run something that allows you to have more control (but is slowe
 For a full list of options, see `process.py --help` and `process_blur.py --help`.
 
 This is based upon the blogpost [Blur Detection With Opencv](https://www.pyimagesearch.com/2015/09/07/blur-detection-with-opencv/) by Adrian Rosebrock.
+
+## Finding Duplicates
+
+In this processing, we add a method to add a hash of the image (pHash). Images that are the same will have the same hash and be added to the CSV. 
+
+You can then use Pandas to find duplicates in your image directory.
+
+```python
+import pandas as pd
+
+df = pd.read_csv('results.csv')
+df1 = df[df.duplicated('hash', keep=False)].sort_values('hash')
+df1.head()
+```
+
+### Alterative
+
+* [difPy](https://difpy.readthedocs.io/en/v4.0.1/)

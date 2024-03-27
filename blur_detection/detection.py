@@ -3,6 +3,19 @@
 import cv2
 import numpy
 
+def p_hash(cv_image):
+    """
+    Calculate 64-bit hash of an image 
+
+    Args:
+        cv_image (_type_): _description_
+
+    Returns:
+        _type_: Image hash
+    """
+    img = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+    h=cv2.img_hash.pHash(img) # 8-byte hash
+    return int.from_bytes(h.tobytes(), byteorder='big', signed=False)
 
 def fix_image_size(image: numpy.array, expected_pixels: float = 2E6):
     """

@@ -23,6 +23,7 @@ import pandas as pd
 from blur_detection import estimate_blur
 from blur_detection import fix_image_size
 from blur_detection import pretty_blur_map
+from blur_detection import p_hash
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Generate blur detection on a directory of images.')
@@ -70,9 +71,10 @@ def process_image(image_path):
     logging.info(f'Fixing image size of {image_path}')
     image = fix_image_size(image)
 
+    phash = p_hash(image)
     blur_map, score, blurry = estimate_blur(image, threshold=threshold)
-    logging.info(f'\tImage Path:{image_path} | score: {score} | blurry: {blurry}') 
-    return {"filepath": image_path, "score": score, "blurry": blurry}
+    logging.info(f'\tImage Path:{image_path} | score: {score} | blurry: {blurry} | hash: {phash}') 
+    return {"filepath": image_path, "score": score, "blurry": blurry, "hash": phash } 
 
 def convert_to_dataframe(results):
   """Converts the multiprocessing pool results to a pandas dataframe."""
