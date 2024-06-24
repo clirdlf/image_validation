@@ -29,8 +29,10 @@ This algorithm depends on `opencv` and `numpy`.
 * Install [git](https://www.git-scm.com/download/win)
 * Open PowerShell and ensure `git` and `python` are both working by typing the following commands:
 
-    git --version
-    python --version
+```bash
+git --version
+python --version
+```
 
 * You should get a version back; if there is an error, you may need to restart your computer and/or debug further.
 * Clone the github repository with this command in PowerShell `git clone https://github.com/clirdlf/image_validation.git`. This will create a new directory (`image_validation`) with all the source code.
