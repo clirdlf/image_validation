@@ -10,13 +10,13 @@ This workflow is a work in progress, but steps include:
 
 ## Blur Dection
 
-This is based on BlurDection2.
+This is based on [BlurDection2](https://github.com/WillBrennan/BlurDetection2).
 
 Blur detection works by using the total variance of the [Laplacian](https://docs.opencv.org/4.9.0/d5/db5/tutorial_laplace_operator.html) of an image to provide a quick and accurate method for scoring how blurry an image is. This is done by taking the difference between the mean pixel value in the original image and the mean pixel value in the blurred image, then squaring it and summing up all the values.
 
 **The lower the score, the blurrier the image**
 
-This algorithm depends on opencv and numpy.
+This algorithm depends on `opencv` and `numpy`.
 
 ## Requirements
 
